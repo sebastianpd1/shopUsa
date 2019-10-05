@@ -23,11 +23,27 @@ const injectContext = PassedComponent => {
 		}
 
 		componentDidMount() {
-			/**
-			 * EDIT THIS!
-			 * This function is the equivalent to "window.onLoad", it only run once on the entire application lifetime
-			 * you should do your ajax requests or fetch api requests here
-			 **/
+			const token = localStorage.token;
+			if (token) {
+				return fetch("https://printerdirect.herokuapp.com/verify/token", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json",
+						Authorization: `Bearer ${token}`
+					}
+				}).then(resp => {
+					if (!resp.ok) {
+						localStorage.removeItem("token");
+						setStore({ token: null }); // agregado sin probar
+						//throw Error(); // se debe poner el catch al final
+					} else {
+						setTimeout(() => {
+							this.state.actions.logout();
+						}, 5000);
+					}
+				});
+			}
 		}
 
 		render() {
