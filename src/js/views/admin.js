@@ -4,11 +4,35 @@ import "../../styles/home.scss";
 import { Context } from "../store/appContext";
 import { Login } from "../component/login";
 import Upload from "../component/upload";
+import { Redirect } from "react-router-dom";
+import { Router, browserHistory } from "react-router";
 
 class Admin extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			token: null
+		};
+	}
+
+	componentDidMount() {
+		const token = localStorage.token;
+		if (token) {
+			return fetch("https://printerdirect.herokuapp.com/verify/token", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Accept: "application/json",
+					Authorization: `Bearer ${token}`
+				}
+			}).then(resp => {
+				if (!resp.ok) {
+					localStorage.removeItem("token");
+					this.setState({ token: "granted" });
+				}
+			});
+		}
+		this.setState({ token: "granted" });
 	}
 	render() {
 		return (
@@ -16,9 +40,10 @@ class Admin extends React.Component {
 				{({ store, actions }) => {
 					return (
 						<div>
-							{store.token === null ? (
+							{!localStorage.token && store.token === null ? (
+								/*<Redirect to="/carrousel" />*/
 								<div className="container">
-									<Login />
+									<h1>NOT FOUND</h1>
 								</div>
 							) : (
 								<div className="container">
@@ -26,10 +51,10 @@ class Admin extends React.Component {
 									<div className="card-group">
 										<Context.Consumer>
 											{({ store, actions }) => {
-												return store.images.map((item, index) => {
+												return store.sliders.map((item, index) => {
 													return (
 														<div key={index} className="card">
-															<img src={item} alt="" style={{ height: "200px" }} />
+															<img src={item.url} alt="" style={{ height: "200px" }} />
 														</div>
 													);
 												});

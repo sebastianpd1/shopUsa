@@ -1,10 +1,11 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, browserHistory } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./views/home";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Login } from "./component/login";
 import Carrousel from "./component/carrousel";
 import Admin from "./views/admin";
 
@@ -17,12 +18,13 @@ export class Layout extends React.Component {
 
 		return (
 			<div className="d-flex flex-column h-100">
-				<BrowserRouter basename={basename}>
+				<BrowserRouter basename={basename} history={browserHistory}>
 					<ScrollToTop>
 						<Navbar />
 						<Switch>
 							<Route exact path="/" component={Home} />
 							<Route exact path="/carrousel" component={Carrousel} />
+							<Route exact path="/login" component={Login} />
 							<Route exact path="/admin" component={Admin} />
 							<Route render={() => <h1>Not found!</h1>} />
 						</Switch>

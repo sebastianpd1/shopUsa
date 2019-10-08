@@ -8,17 +8,31 @@ function Upload() {
 	const uploadImage = async e => {
 		const files = e.target.files;
 		const data = new FormData();
+		const token = localStorage.token;
 		data.append("file", files[0]);
-		data.append("upload_preset", "printerdirect");
+		data.append("upload_preset", process.env.PRESET);
 		setLoading(true);
-		const res = await fetch("https://api.cloudinary.com/v1_1/printerdirect/image/upload", {
+		const res = await fetch(process.env.UPLOADIMAGE, {
 			method: "POST",
 			body: data
 		});
 		const file = await res.json();
-
 		setImage(file.secure_url);
 		setLoading(false);
+
+		const toBackend = await fetch("https://printerdirect.herokuapp.com/sliders/add", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`
+			},
+
+			body: JSON.stringify({
+				image: file.secure_url,
+				url: null
+			})
+		});
 	};
 	return (
 		<div className="App">

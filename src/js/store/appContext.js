@@ -23,27 +23,7 @@ const injectContext = PassedComponent => {
 		}
 
 		componentDidMount() {
-			const token = localStorage.token;
-			if (token) {
-				return fetch("https://printerdirect.herokuapp.com/verify/token", {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-						Authorization: `Bearer ${token}`
-					}
-				}).then(resp => {
-					if (!resp.ok) {
-						localStorage.removeItem("token");
-						setStore({ token: null }); // agregado sin probar
-						//throw Error(); // se debe poner el catch al final
-					} else {
-						setTimeout(() => {
-							this.state.actions.logout();
-						}, 5000);
-					}
-				});
-			}
+			this.state.actions.getSliders();
 		}
 
 		render() {
@@ -59,5 +39,4 @@ const injectContext = PassedComponent => {
 	}
 	return StoreWrapper;
 };
-
 export default injectContext;

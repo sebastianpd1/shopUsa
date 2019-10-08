@@ -5,6 +5,9 @@ import "../../styles/login.scss";
 import printerDirectLogo from "../../img/printerdirect.png";
 
 export class Login extends React.Component {
+	constructor(props) {
+		super(props);
+	}
 	render() {
 		return (
 			<div id="login">
@@ -68,6 +71,3 @@ export class Login extends React.Component {
 		);
 	}
 }
-Login.propTypes = {
-	history: PropTypes.object
-};
