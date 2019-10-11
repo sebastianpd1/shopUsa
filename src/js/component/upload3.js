@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import "../../styles/home.scss";
-import PropTypes from "prop-types";
 
-export default function Upload(props) {
+function Upload() {
 	const [image, setImage] = useState(""); // image es la variable que va en el state, y set image es para setear el state, en esta
 	// primera linea el valor de image sera ''
 	const [loading, setLoading] = useState(false); //  valor inicial de loading sera false
-	const [url, setUrl] = useState("");
 
 	const uploadImage = async e => {
 		const files = e.target.files;
 		const data = new FormData();
+		const token = localStorage.token;
 		data.append("file", files[0]);
 		data.append("upload_preset", process.env.PRESET);
 		setLoading(true);
@@ -21,11 +20,8 @@ export default function Upload(props) {
 		const file = await res.json();
 		setImage(file.secure_url);
 		setLoading(false);
-	};
 
-	const toBackend = () => {
-		const token = localStorage.token;
-		fetch("https://printerdirect.herokuapp.com/sliders/add", {
+		const toBackend = await fetch("https://printerdirect.herokuapp.com/sliders/add", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -34,28 +30,18 @@ export default function Upload(props) {
 			},
 
 			body: JSON.stringify({
-				image: image,
-				url: url
+				image: file.secure_url,
+				url: null
 			})
-		}).then(props.fetchNewImages);
+		});
 	};
-
 	return (
 		<div className="App">
 			<h1>Upload Image</h1>
 			<input type="file" name="file" placeholder="Subir una imagen" onChange={uploadImage} />
-			<input
-				type="text"
-				name="url"
-				placeholder="Insertar link de redireccion:"
-				onChange={e => setUrl(e.target.value)}
-			/>
-			<input type="button" className="btn btn-primary" value="Cargar" onClick={toBackend} />
 			{loading ? <h3>Loading...</h3> : <img src={image} style={{ width: "300px" }} />}
 		</div>
 	);
 }
 
-Upload.propTypes = {
-	fetchNewImages: PropTypes.func
-};
+export default Upload;

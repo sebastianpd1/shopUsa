@@ -5,8 +5,6 @@ import { Context } from "../store/appContext";
 import { Login } from "../component/login";
 import Upload from "../component/upload";
 import { Redirect } from "react-router-dom";
-import { Router, browserHistory } from "react-router";
-
 class Admin extends React.Component {
 	constructor(props) {
 		super(props);
@@ -34,6 +32,7 @@ class Admin extends React.Component {
 		}
 		this.setState({ token: "granted" });
 	}
+
 	render() {
 		return (
 			<Context.Consumer>
@@ -47,14 +46,14 @@ class Admin extends React.Component {
 								</div>
 							) : (
 								<div className="container">
-									<Upload />
+									<Upload fetchNewImages={() => actions.getSliders()} />
 									<div className="card-group">
 										<Context.Consumer>
 											{({ store, actions }) => {
 												return store.sliders.map((item, index) => {
 													return (
 														<div key={index} className="card">
-															<img src={item.url} alt="" style={{ height: "200px" }} />
+															<img src={item.image} alt="" style={{ height: "200px" }} />
 														</div>
 													);
 												});

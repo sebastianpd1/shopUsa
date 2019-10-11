@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, browserHistory } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./views/home";
 import injectContext from "./store/appContext";
@@ -18,7 +18,7 @@ export class Layout extends React.Component {
 
 		return (
 			<div className="d-flex flex-column h-100">
-				<BrowserRouter basename={basename} history={browserHistory}>
+				<BrowserRouter basename={basename}>
 					<ScrollToTop>
 						<Navbar />
 						<Switch>
