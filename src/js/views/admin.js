@@ -53,6 +53,14 @@ class Admin extends React.Component {
 												return store.sliders.map((item, index) => {
 													return (
 														<div key={index} className="card">
+															<div className="card-header">
+																<div className="offset-11 text-dark">
+																	<i
+																		className="fas fa-times-circle fa-1x text-danger"
+																		onClick={() => actions.deleteSlider(item.id)}
+																	/>
+																</div>
+															</div>
 															<img src={item.image} alt="" style={{ height: "200px" }} />
 														</div>
 													);
