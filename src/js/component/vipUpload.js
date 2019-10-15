@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../../styles/home.scss";
 import PropTypes from "prop-types";
 
-export default function Upload(props) {
+export default function VipUpload(props) {
 	const [image, setImage] = useState(""); // image es la variable que va en el state, y set image es para setear el state, en esta
 	// primera linea el valor de image sera ''
 	const [loading, setLoading] = useState(false); //  valor inicial de loading sera false
@@ -42,7 +42,6 @@ export default function Upload(props) {
 
 	return (
 		<div className="App">
-			<h1>Upload Image</h1>
 			<input type="file" name="file" placeholder="Subir una imagen" onChange={uploadImage} />
 			<input
 				type="text"
@@ -56,6 +55,6 @@ export default function Upload(props) {
 	);
 }
 
-Upload.propTypes = {
+VipUpload.propTypes = {
 	fetchNewImages: PropTypes.func
 };

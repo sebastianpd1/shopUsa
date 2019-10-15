@@ -11,7 +11,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				"https://images.unsplash.com/photo-1553969420-fb915228af51?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80",
 				"https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
 				"https://images.unsplash.com/photo-1550640964-4775934de4af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-			]
+			],
+			printers: [],
+			vips: []
 		},
 		actions: {
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,11 +95,67 @@ const getState = ({ getStore, getActions, setStore }) => {
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			/////////////////////////////////////////////////////// PRINTERS //////////////////////////////////////////////////////
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			getPrinters: {},
+			getPrinters: () => {
+				const token = localStorage.token;
+				fetch("https://printerdirect.herokuapp.com/printers/all", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json",
+						Authorization: `Bearer ${token}`
+					}
+				})
+					.then(response => response.json())
+					.then(data => {
+						setStore({ printers: data });
+					});
+			},
+
+			deletePrinter: printer_id => {
+				const token = localStorage.token;
+				fetch("https://printerdirect.herokuapp.com/printer/" + printer_id, {
+					method: "DELETE",
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				})
+					.then(response => response.json())
+					.then(data => {
+						setStore({ printers: data });
+					});
+			},
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			/////////////////////////////////////////////////////// VIPS //////////////////////////////////////////////////////
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			getVips: {}
+			getVips: () => {
+				const token = localStorage.token;
+				fetch("https://printerdirect.herokuapp.com/vips/all", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json",
+						Authorization: `Bearer ${token}`
+					}
+				})
+					.then(response => response.json())
+					.then(data => {
+						setStore({ vips: data });
+					});
+			},
+
+			deleteVip: vip_id => {
+				const token = localStorage.token;
+				fetch("https://printerdirect.herokuapp.com/vip/" + vip_id, {
+					method: "DELETE",
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				})
+					.then(response => response.json())
+					.then(data => {
+						setStore({ vips: data });
+					});
+			}
 		}
 	};
 };

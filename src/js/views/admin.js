@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../styles/home.scss";
 import "../../styles/home.scss";
 import { Context } from "../store/appContext";
-import { Login } from "../component/login";
-import Upload from "../component/upload";
+import PrinterUpload from "../component/printerUpload";
+import SliderUpload from "../component/sliderUpload";
+import VipUpload from "../component/vipUpload";
 import { Redirect } from "react-router-dom";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
+
 class Admin extends React.Component {
 	constructor(props) {
 		super(props);
@@ -46,28 +50,119 @@ class Admin extends React.Component {
 								</div>
 							) : (
 								<div className="container">
-									<Upload fetchNewImages={() => actions.getSliders()} />
-									<div className="card-group">
-										<Context.Consumer>
-											{({ store, actions }) => {
-												return store.sliders.map((item, index) => {
-													return (
-														<div key={index} className="card">
-															<div className="card-header">
-																<div className="offset-11 text-dark">
-																	<i
-																		className="fas fa-times-circle fa-1x text-danger"
-																		onClick={() => actions.deleteSlider(item.id)}
+									<Tabs defaultActiveKey="Sliders" id="uncontrolled-tab-example">
+										<Tab eventKey="Sliders" title="Sliders">
+											<div className="col">
+												<div className="row my-3">
+													<h1>SLIDER</h1>
+												</div>
+												<div className="row">
+													<SliderUpload fetchNewImages={() => actions.getSliders()} />
+												</div>
+											</div>
+											<div className="card-group">
+												<Context.Consumer>
+													{({ store, actions }) => {
+														return store.sliders.map((item, index) => {
+															return (
+																<div key={index} className="card">
+																	<div className="card-header">
+																		<div className="offset-11 text-dark">
+																			<i
+																				className="fas fa-times-circle fa-1x text-danger"
+																				onClick={() =>
+																					actions.deleteSlider(item.id)
+																				}
+																			/>
+																		</div>
+																	</div>
+																	<img
+																		src={item.image}
+																		alt=""
+																		style={{ height: "200px" }}
 																	/>
 																</div>
-															</div>
-															<img src={item.image} alt="" style={{ height: "200px" }} />
-														</div>
-													);
-												});
-											}}
-										</Context.Consumer>
-									</div>
+															);
+														});
+													}}
+												</Context.Consumer>
+											</div>
+										</Tab>
+										<Tab eventKey="Impresoras" title="Impresoras">
+											<div className="col">
+												<div className="row my-3">
+													<h1>IMPRESORAS</h1>
+												</div>
+												<div className="row">
+													<PrinterUpload fetchNewImages={() => actions.getSliders()} />
+												</div>
+											</div>
+											<div className="card-group">
+												<Context.Consumer>
+													{({ store, actions }) => {
+														return store.sliders.map((item, index) => {
+															return (
+																<div key={index} className="card">
+																	<div className="card-header">
+																		<div className="offset-11 text-dark">
+																			<i
+																				className="fas fa-times-circle fa-1x text-danger"
+																				onClick={() =>
+																					actions.deleteSlider(item.id)
+																				}
+																			/>
+																		</div>
+																	</div>
+																	<img
+																		src={item.image}
+																		alt=""
+																		style={{ height: "200px" }}
+																	/>
+																</div>
+															);
+														});
+													}}
+												</Context.Consumer>
+											</div>
+										</Tab>
+										<Tab eventKey="Destacados" title="Destacados">
+											<div className="col">
+												<div className="row my-3">
+													<h1>PRODUCTOS DESTACADOS</h1>
+												</div>
+												<div className="row">
+													<VipUpload fetchNewImages={() => actions.getSliders()} />
+												</div>
+											</div>
+											<div className="card-group">
+												<Context.Consumer>
+													{({ store, actions }) => {
+														return store.sliders.map((item, index) => {
+															return (
+																<div key={index} className="card">
+																	<div className="card-header">
+																		<div className="offset-11 text-dark">
+																			<i
+																				className="fas fa-times-circle fa-1x text-danger"
+																				onClick={() =>
+																					actions.deleteSlider(item.id)
+																				}
+																			/>
+																		</div>
+																	</div>
+																	<img
+																		src={item.image}
+																		alt=""
+																		style={{ height: "200px" }}
+																	/>
+																</div>
+															);
+														});
+													}}
+												</Context.Consumer>
+											</div>
+										</Tab>
+									</Tabs>
 								</div>
 							)}
 						</div>
