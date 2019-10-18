@@ -1,10 +1,10 @@
 import React from "react";
 import "../../styles/home.scss";
-import "../../styles/home.scss";
 import { Context } from "../store/appContext";
 import PrinterUpload from "../component/printerUpload";
 import SliderUpload from "../component/sliderUpload";
 import VipUpload from "../component/vipUpload";
+import UpdateModal from "../component/updateModal";
 import { Redirect } from "react-router-dom";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
@@ -13,7 +13,8 @@ class Admin extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			token: null
+			token: null,
+			showModal: false
 		};
 	}
 
@@ -100,10 +101,21 @@ class Admin extends React.Component {
 											<div className="card-group">
 												<Context.Consumer>
 													{({ store, actions }) => {
-														return store.sliders.map((item, index) => {
+														return store.printers.map((item, index) => {
 															return (
 																<div key={index} className="card">
 																	<div className="card-header">
+																		<div className="text-dark">
+																			<i
+																				className="fas fa-pen-square text-danger"
+																				onClick={() =>
+																					this.setState({
+																						showModal: true,
+																						updateId: item.id
+																					})
+																				}
+																			/>
+																		</div>
 																		<div className="offset-11 text-dark">
 																			<i
 																				className="fas fa-times-circle fa-1x text-danger"
@@ -124,6 +136,11 @@ class Admin extends React.Component {
 													}}
 												</Context.Consumer>
 											</div>
+											<UpdateModal
+												show={this.state.showModal}
+												updateId={this.state.updateId}
+												onClose={() => this.setState({ showModal: false })}
+											/>
 										</Tab>
 										<Tab eventKey="Destacados" title="Destacados">
 											<div className="col">
