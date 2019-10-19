@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				"https://images.unsplash.com/photo-1550640964-4775934de4af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
 			],
 			printers: [],
-			vips: []
+			vips: [],
+			printersFoundUpdate: []
 		},
 		actions: {
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,12 +126,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			updatePrinter: updateObj => {
-				const url = "https://3000-cc2270b7-3663-47df-8934-859f16490208.ws-us0.gitpod.io/person/";
+			saveFoundToUpdateToTheStore: itemId => {
+				const store = getStore();
+				let printer = store.printers.find(e => e.id === itemId);
+				setStore({ printersFoundUpdate: printer });
+			},
+
+			handleChangeforUpdatePrinterInput: e => {
+				const store = getStore();
+				const target = e.target;
+				const value = target.value;
+				const name = target.name;
+				setStore({ printersFoundUpdate: { ...store.printersFoundUpdate, [name]: value } });
+			},
+
+			updatePrinter: (updateObj, id, props) => {
+				const url = "https://printerdirect.herokuapp.com/printer/";
+				const token = localStorage.token;
 
 				fetch(url + id, {
 					method: "PUT",
 					headers: {
+						Authorization: `Bearer ${token}`,
 						"Content-Type": "application/json"
 					},
 					body: JSON.stringify(updateObj)
@@ -139,6 +156,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => {
 						setStore({ printers: data });
 					});
+				props.history.push("/admin");
 			},
 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -8,14 +8,7 @@ class UpdateModal extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			updateObj: {
-				item: null,
-				brand: null,
-				category: null,
-				condition: null,
-				quantity: null,
-				price: null
-			}
+			updateObj: {}
 		};
 	}
 
@@ -32,7 +25,9 @@ class UpdateModal extends React.Component {
 							<h5 className="modal-title">Editar informacion:</h5>
 							{this.props.onClose ? (
 								<button
-									onClick={() => this.props.onClose()}
+									onClick={() => {
+										this.props.onClose();
+									}}
 									type="button"
 									className="close"
 									data-dismiss="modal"
@@ -46,26 +41,19 @@ class UpdateModal extends React.Component {
 						{this.props.updateId !== null ? (
 							<Context.Consumer>
 								{({ store, actions }) => {
-									let theId = this.props.updateId;
-									let printer = store.printers.find(e => e.id === theId);
 									return (
 										<div className="modal-body">
 											{/* ACA VA EL CONTENIDO DE LA MODAL */}
 											<input
 												type="text"
-												defaultValue={printer.item}
-												name="url"
 												className="form-control"
-												placeholder="Item:"
-												onChange={e =>
-													this.setState({
-														updateObj: { ...this.state.updateObj, item: e.target.value }
-													})
-												}
+												name="item"
+												value={store.printersFoundUpdate.item}
+												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
 											/>
 											<input
 												type="text"
-												name="url"
+												defaultValue="{printer.brand}"
 												className="form-control my-3"
 												placeholder="Marca:"
 												onChange={e =>
@@ -76,7 +64,7 @@ class UpdateModal extends React.Component {
 											/>
 											<input
 												type="text"
-												name="url"
+												defaultValue="{printer.category}"
 												className="form-control"
 												placeholder="Categoria:"
 												onChange={e =>
@@ -87,7 +75,7 @@ class UpdateModal extends React.Component {
 											/>
 											<input
 												type="text"
-												name="url"
+												defaultValue="{printer.condition}"
 												className="form-control my-3"
 												placeholder="Condicion:"
 												onChange={e =>
@@ -101,7 +89,7 @@ class UpdateModal extends React.Component {
 											/>
 											<input
 												type="text"
-												name="url"
+												defaultValue="{printer.quantity}"
 												className="form-control"
 												placeholder="Cantidad:"
 												onChange={e =>
@@ -112,7 +100,7 @@ class UpdateModal extends React.Component {
 											/>
 											<input
 												type="text"
-												name="url"
+												defaultValue="{printer.price}"
 												className="form-control my-3"
 												placeholder="Precio:"
 												onChange={e =>
@@ -124,10 +112,15 @@ class UpdateModal extends React.Component {
 											<div className="modal-footer">
 												<button
 													onClick={() => {
-														actions.updatePrinter(this.state.updateObj);
+														actions.updatePrinter(
+															this.state.updateObj,
+															printer.id,
+															this.props
+														);
+														this.forceUpdate();
 													}}
 													className="btn btn-success m-1 btn-block">
-													Submit
+													Actualizar
 												</button>
 											</div>
 										</div>

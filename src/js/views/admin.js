@@ -14,7 +14,8 @@ class Admin extends React.Component {
 		super(props);
 		this.state = {
 			token: null,
-			showModal: false
+			showModal: false,
+			updateId: null
 		};
 	}
 
@@ -108,12 +109,15 @@ class Admin extends React.Component {
 																		<div className="text-dark">
 																			<i
 																				className="fas fa-pen-square text-danger"
-																				onClick={() =>
+																				onClick={() => {
 																					this.setState({
 																						showModal: true,
 																						updateId: item.id
-																					})
-																				}
+																					});
+																					actions.saveFoundToUpdateToTheStore(
+																						item.id
+																					);
+																				}}
 																			/>
 																		</div>
 																		<div className="offset-11 text-dark">
@@ -125,6 +129,7 @@ class Admin extends React.Component {
 																			/>
 																		</div>
 																	</div>
+																	<h1>{item.item}</h1>
 																	<img
 																		src={item.image}
 																		alt=""
@@ -136,6 +141,7 @@ class Admin extends React.Component {
 													}}
 												</Context.Consumer>
 											</div>
+
 											<UpdateModal
 												show={this.state.showModal}
 												updateId={this.state.updateId}
