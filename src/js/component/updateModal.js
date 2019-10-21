@@ -8,7 +8,7 @@ class UpdateModal extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			updateObj: {}
+			updated: false
 		};
 	}
 
@@ -44,80 +44,65 @@ class UpdateModal extends React.Component {
 									return (
 										<div className="modal-body">
 											{/* ACA VA EL CONTENIDO DE LA MODAL */}
+											<label htmlFor="item">Item:</label>
 											<input
 												type="text"
 												className="form-control"
 												name="item"
-												value={store.printersFoundUpdate.item}
+												value={store.printersFoundUpdate.item || ""}
 												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
 											/>
+											<label htmlFor="brand">Marca:</label>
 											<input
 												type="text"
-												defaultValue="{printer.brand}"
-												className="form-control my-3"
-												placeholder="Marca:"
-												onChange={e =>
-													this.setState({
-														updateObj: { ...this.state.updateObj, brand: e.target.value }
-													})
-												}
-											/>
-											<input
-												type="text"
-												defaultValue="{printer.category}"
 												className="form-control"
+												name="brand"
+												value={store.printersFoundUpdate.brand || ""}
+												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
+											/>
+											<label htmlFor="category">Categoria:</label>
+											<input
+												type="text"
+												className="form-control"
+												name="category"
 												placeholder="Categoria:"
-												onChange={e =>
-													this.setState({
-														updateObj: { ...this.state.updateObj, category: e.target.value }
-													})
-												}
+												value={store.printersFoundUpdate.category || ""}
+												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
 											/>
+											<label htmlFor="condition">Condicion:</label>
 											<input
 												type="text"
-												defaultValue="{printer.condition}"
-												className="form-control my-3"
-												placeholder="Condicion:"
-												onChange={e =>
-													this.setState({
-														updateObj: {
-															...this.state.updateObj,
-															condition: e.target.value
-														}
-													})
-												}
-											/>
-											<input
-												type="text"
-												defaultValue="{printer.quantity}"
 												className="form-control"
-												placeholder="Cantidad:"
-												onChange={e =>
-													this.setState({
-														updateObj: { ...this.state.updateObj, quantity: e.target.value }
-													})
-												}
+												name="condition"
+												value={store.printersFoundUpdate.condition || ""}
+												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
 											/>
+											<label htmlFor="quantity">Cantidad:</label>
 											<input
 												type="text"
-												defaultValue="{printer.price}"
+												className="form-control"
+												name="quantity"
+												value={store.printersFoundUpdate.quantity || ""}
+												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
+											/>
+											<label htmlFor="price">Precio:</label>
+											<input
+												type="text"
 												className="form-control my-3"
-												placeholder="Precio:"
-												onChange={e =>
-													this.setState({
-														updateObj: { ...this.state.updateObj, price: e.target.value }
-													})
-												}
+												name="price"
+												value={store.printersFoundUpdate.price || ""}
+												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
 											/>
 											<div className="modal-footer">
 												<button
 													onClick={() => {
 														actions.updatePrinter(
-															this.state.updateObj,
-															printer.id,
+															store.printersFoundUpdate,
+															this.props.updateId,
 															this.props
 														);
-														this.forceUpdate();
+														this.setState({ updated: true });
+														this.props.onClose();
 													}}
 													className="btn btn-success m-1 btn-block">
 													Actualizar
