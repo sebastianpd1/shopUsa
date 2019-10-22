@@ -6,7 +6,13 @@ export default function PrinterUpload(props) {
 	const [image, setImage] = useState(""); // image es la variable que va en el state, y set image es para setear el state, en esta
 	// primera linea el valor de image sera ''
 	const [loading, setLoading] = useState(false); //  valor inicial de loading sera false
-	const [url, setUrl] = useState("");
+	const [item, setItem] = useState("");
+	const [category, setCategory] = useState("");
+	const [brand, setBrand] = useState("");
+	const [condition, setCondition] = useState("");
+	const [price, setPrice] = useState("");
+	const [quantity, setQuantity] = useState("");
+	const [description, setDescription] = useState("");
 
 	const uploadImage = async e => {
 		const files = e.target.files;
@@ -25,7 +31,7 @@ export default function PrinterUpload(props) {
 
 	const toBackend = () => {
 		const token = localStorage.token;
-		fetch("https://printerdirect.herokuapp.com/sliders/add", {
+		fetch("https://printerdirect.herokuapp.com/printers/add", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -35,9 +41,15 @@ export default function PrinterUpload(props) {
 
 			body: JSON.stringify({
 				image: image,
-				url: url
+				item: item,
+				brand: brand,
+				category: category,
+				quantity: quantity,
+				price: price,
+				description: description,
+				condition: condition
 			})
-		}).then(props.fetchNewImages);
+		}).then(props.fetchNewPrinters);
 	};
 
 	return (
@@ -46,45 +58,45 @@ export default function PrinterUpload(props) {
 				<div className="col">
 					<input
 						type="text"
-						name="url"
+						name="item"
 						className="form-control"
 						placeholder="Item:"
-						onChange={e => setUrl(e.target.value)}
+						onChange={e => setItem(e.target.value)}
 					/>
 					<input
 						type="text"
-						name="url"
+						name="brand"
 						className="form-control my-3"
 						placeholder="Marca:"
-						onChange={e => setUrl(e.target.value)}
+						onChange={e => setBrand(e.target.value)}
 					/>
 					<input
 						type="text"
-						name="url"
+						name="category"
 						className="form-control"
 						placeholder="Categoria:"
-						onChange={e => setUrl(e.target.value)}
+						onChange={e => setCategory(e.target.value)}
 					/>
 					<input
 						type="text"
-						name="url"
+						name="condition"
 						className="form-control my-3"
 						placeholder="Condicion:"
-						onChange={e => setUrl(e.target.value)}
+						onChange={e => setCondition(e.target.value)}
 					/>
 					<input
 						type="text"
-						name="url"
+						name="quantity"
 						className="form-control"
 						placeholder="Cantidad:"
-						onChange={e => setUrl(e.target.value)}
+						onChange={e => setQuantity(e.target.value)}
 					/>
 					<input
 						type="text"
 						name="url"
 						className="form-control my-3"
 						placeholder="Precio:"
-						onChange={e => setUrl(e.target.value)}
+						onChange={e => setPrice(e.target.value)}
 					/>
 				</div>
 				<div className="col">
@@ -92,12 +104,12 @@ export default function PrinterUpload(props) {
 					{loading ? <h3>Cargando la imagen...</h3> : <img src={image} style={{ width: "300px" }} />}
 					<textarea
 						type="text"
-						name="url"
+						name="description"
 						className="my-4"
-						placeholder="Insertar link de redireccion:"
+						placeholder="Descripcion / Caracteristicas:"
 						rows="10"
 						cols="50"
-						onChange={e => setUrl(e.target.value)}
+						onChange={e => setDescription(e.target.value)}
 					/>
 				</div>
 			</div>
@@ -116,5 +128,5 @@ export default function PrinterUpload(props) {
 }
 
 PrinterUpload.propTypes = {
-	fetchNewImages: PropTypes.func
+	fetchNewPrinters: PropTypes.func
 };

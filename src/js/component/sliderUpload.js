@@ -37,7 +37,7 @@ export default function SliderUpload(props) {
 				image: image,
 				url: url
 			})
-		}).then(props.fetchNewImages);
+		}).then(props.fetchNewSliders);
 	};
 
 	return (
@@ -57,5 +57,5 @@ export default function SliderUpload(props) {
 }
 
 SliderUpload.propTypes = {
-	fetchNewImages: PropTypes.func
+	fetchNewSliders: PropTypes.func
 };

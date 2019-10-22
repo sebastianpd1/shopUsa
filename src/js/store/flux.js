@@ -126,7 +126,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			saveFoundToUpdateToTheStore: itemId => {
+			savePrinterFoundToUpdateToTheStore: itemId => {
 				const store = getStore();
 				let printer = store.printers.find(e => e.id === itemId);
 				setStore({ printersFoundUpdate: printer });
@@ -191,28 +191,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ vips: data });
 					});
 			},
-			updateVip: (id, fullname, email, phone, address, props) => {
-				const url = "https://3000-cc2270b7-3663-47df-8934-859f16490208.ws-us0.gitpod.io/person/";
+
+			saveVipFoundToUpdateToTheStore: itemId => {
+				const store = getStore();
+				let printer = store.vips.find(e => e.id === itemId);
+				setStore({ printersFoundUpdate: printer });
+			},
+
+			updateVip: (updateObj, id, props) => {
+				const url = "https://printerdirect.herokuapp.com/vip/";
+				const token = localStorage.token;
 
 				fetch(url + id, {
 					method: "PUT",
 					headers: {
+						Authorization: `Bearer ${token}`,
 						"Content-Type": "application/json"
 					},
-					body: JSON.stringify({
-						fullname: fullname,
-						email: email,
-						phone: phone,
-						address: address
-					})
-				}).then(() => {
-					fetch(url)
-						.then(response => response.json())
-						.then(updatedData => {
-							setStore({ contactList: updatedData.reverse() });
-						});
-				});
-				props.history.push("/");
+					body: JSON.stringify(updateObj)
+				})
+					.then(response => response.json())
+					.then(data => {
+						setStore({ vips: data });
+					});
+				props.history.push("/admin");
 			}
 		}
 	};

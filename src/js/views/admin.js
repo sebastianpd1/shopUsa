@@ -59,7 +59,7 @@ class Admin extends React.Component {
 													<h1>SLIDER</h1>
 												</div>
 												<div className="row">
-													<SliderUpload fetchNewImages={() => actions.getSliders()} />
+													<SliderUpload fetchNewSliders={() => actions.getSliders()} />
 												</div>
 											</div>
 											<div className="card-group">
@@ -96,7 +96,7 @@ class Admin extends React.Component {
 													<h1>IMPRESORAS</h1>
 												</div>
 												<div className="row">
-													<PrinterUpload fetchNewImages={() => actions.getSliders()} />
+													<PrinterUpload fetchNewPrinters={() => actions.getPrinters()} />
 												</div>
 											</div>
 											<div className="card-group">
@@ -106,7 +106,7 @@ class Admin extends React.Component {
 															return (
 																<div key={index} className="card">
 																	<div className="card-header">
-																		<div className="text-dark">
+																		<div className="text-dark d-flex justify-content-between">
 																			<i
 																				className="fas fa-pen-square text-danger"
 																				onClick={() => {
@@ -114,17 +114,15 @@ class Admin extends React.Component {
 																						showModal: true,
 																						updateId: item.id
 																					});
-																					actions.saveFoundToUpdateToTheStore(
+																					actions.savePrinterFoundToUpdateToTheStore(
 																						item.id
 																					);
 																				}}
 																			/>
-																		</div>
-																		<div className="offset-11 text-dark">
 																			<i
-																				className="fas fa-times-circle fa-1x text-danger"
+																				className="fas fa-times-circle text-danger"
 																				onClick={() =>
-																					actions.deleteSlider(item.id)
+																					actions.deletePrinter(item.id)
 																				}
 																			/>
 																		</div>
@@ -151,28 +149,41 @@ class Admin extends React.Component {
 										<Tab eventKey="Destacados" title="Destacados">
 											<div className="col">
 												<div className="row my-3">
-													<h1>PRODUCTOS DESTACADOS</h1>
+													<h1>DESTACADOS</h1>
 												</div>
 												<div className="row">
-													<VipUpload fetchNewImages={() => actions.getSliders()} />
+													<VipUpload fetchNewVips={() => actions.getVips()} />
 												</div>
 											</div>
 											<div className="card-group">
 												<Context.Consumer>
 													{({ store, actions }) => {
-														return store.sliders.map((item, index) => {
+														return store.vips.map((item, index) => {
 															return (
 																<div key={index} className="card">
 																	<div className="card-header">
-																		<div className="offset-11 text-dark">
+																		<div className="text-dark d-flex justify-content-between">
 																			<i
-																				className="fas fa-times-circle fa-1x text-danger"
+																				className="fas fa-pen-square text-danger"
+																				onClick={() => {
+																					this.setState({
+																						showModal: true,
+																						updateId: item.id
+																					});
+																					actions.saveVipFoundToUpdateToTheStore(
+																						item.id
+																					);
+																				}}
+																			/>
+																			<i
+																				className="fas fa-times-circle text-danger"
 																				onClick={() =>
-																					actions.deleteSlider(item.id)
+																					actions.deleteVip(item.id)
 																				}
 																			/>
 																		</div>
 																	</div>
+																	<h1>{item.item}</h1>
 																	<img
 																		src={item.image}
 																		alt=""
@@ -184,6 +195,12 @@ class Admin extends React.Component {
 													}}
 												</Context.Consumer>
 											</div>
+
+											<UpdateModal
+												show={this.state.showModal}
+												updateId={this.state.updateId}
+												onClose={() => this.setState({ showModal: false })}
+											/>
 										</Tab>
 									</Tabs>
 								</div>

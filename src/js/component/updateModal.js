@@ -44,56 +44,70 @@ class UpdateModal extends React.Component {
 									return (
 										<div className="modal-body">
 											{/* ACA VA EL CONTENIDO DE LA MODAL */}
-											<label htmlFor="item">Item:</label>
-											<input
-												type="text"
-												className="form-control"
-												name="item"
-												value={store.printersFoundUpdate.item || ""}
-												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
-											/>
-											<label htmlFor="brand">Marca:</label>
-											<input
-												type="text"
-												className="form-control"
-												name="brand"
-												value={store.printersFoundUpdate.brand || ""}
-												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
-											/>
-											<label htmlFor="category">Categoria:</label>
-											<input
-												type="text"
-												className="form-control"
-												name="category"
-												placeholder="Categoria:"
-												value={store.printersFoundUpdate.category || ""}
-												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
-											/>
-											<label htmlFor="condition">Condicion:</label>
-											<input
-												type="text"
-												className="form-control"
-												name="condition"
-												value={store.printersFoundUpdate.condition || ""}
-												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
-											/>
-											<label htmlFor="quantity">Cantidad:</label>
-											<input
-												type="text"
-												className="form-control"
-												name="quantity"
-												value={store.printersFoundUpdate.quantity || ""}
-												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
-											/>
-											<label htmlFor="price">Precio:</label>
-											<input
-												type="text"
-												className="form-control my-3"
-												name="price"
-												value={store.printersFoundUpdate.price || ""}
-												onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
-											/>
-											<div className="modal-footer">
+											<div className="row">
+												<div className="col-6">
+													<label htmlFor="item">Item:</label>
+													<input
+														type="text"
+														className="form-control"
+														name="item"
+														value={store.printersFoundUpdate.item || ""}
+														onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
+													/>
+													<label htmlFor="brand">Marca:</label>
+													<input
+														type="text"
+														className="form-control"
+														name="brand"
+														value={store.printersFoundUpdate.brand || ""}
+														onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
+													/>
+													<label htmlFor="category">Categoria:</label>
+													<input
+														type="text"
+														className="form-control"
+														name="category"
+														value={store.printersFoundUpdate.category || ""}
+														onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
+													/>
+													<label htmlFor="condition">Condicion:</label>
+													<input
+														type="text"
+														className="form-control"
+														name="condition"
+														value={store.printersFoundUpdate.condition || ""}
+														onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
+													/>
+													<label htmlFor="quantity">Cantidad:</label>
+													<input
+														type="text"
+														className="form-control"
+														name="quantity"
+														value={store.printersFoundUpdate.quantity || ""}
+														onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
+													/>
+													<label htmlFor="price">Precio:</label>
+													<input
+														type="text"
+														className="form-control"
+														name="price"
+														value={store.printersFoundUpdate.price || ""}
+														onChange={e => actions.handleChangeforUpdatePrinterInput(e)}
+													/>
+												</div>
+												<div className="col-6">
+													<textarea
+														type="text"
+														name="description"
+														className="my-4 form-control"
+														placeholder="Descripcion / Caracteristicas:"
+														rows="10"
+														cols="50"
+														onChange={e => setDescription(e.target.value)}
+													/>
+												</div>
+											</div>
+											<div className="modal-footer row">
 												<button
 													onClick={() => {
 														actions.updatePrinter(
