@@ -42,9 +42,17 @@ ul.marquee li {
 
 
   }
-  body{
-    background: #fff;
-  }
+
+
+ .home {
+    background: url("../img/background.png");
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
   .box {
     transition: box-shadow .3s;
     width: 300px;

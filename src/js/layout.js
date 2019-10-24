@@ -17,7 +17,7 @@ export class Layout extends React.Component {
 		const basename = process.env.BASENAME || "";
 
 		return (
-			<div className="d-flex flex-column h-100">
+			<div className=" p-0 d-flex flex-column h-100">
 				<BrowserRouter basename={basename}>
 					<ScrollToTop>
 						<Navbar />

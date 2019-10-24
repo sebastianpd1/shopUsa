@@ -4,14 +4,7 @@ import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import "../../styles/home.scss";
 
-class UpdateModal extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			updated: false
-		};
-	}
-
+class UpdateModalVip extends React.Component {
 	render() {
 		return (
 			<div
@@ -111,12 +104,11 @@ class UpdateModal extends React.Component {
 											<div className="modal-footer row">
 												<button
 													onClick={() => {
-														actions.updatePrinter(
+														actions.updateVip(
 															store.printersFoundUpdate,
 															this.props.updateId,
 															this.props
 														);
-														this.setState({ updated: true });
 														this.props.onClose();
 													}}
 													className="btn btn-success m-1 btn-block">
@@ -142,7 +134,7 @@ class UpdateModal extends React.Component {
  * Define the data-types for
  * your component's properties
  **/
-UpdateModal.propTypes = {
+UpdateModalVip.propTypes = {
 	history: PropTypes.object,
 	onClose: PropTypes.func,
 	show: PropTypes.bool,
@@ -153,9 +145,9 @@ UpdateModal.propTypes = {
  * Define the default values for
  * your component's properties
  **/
-UpdateModal.defaultProps = {
+UpdateModalVip.defaultProps = {
 	show: false,
 	onClose: null,
 	updateId: null
 };
-export default withRouter(UpdateModal);
+export default withRouter(UpdateModalVip);

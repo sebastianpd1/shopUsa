@@ -5,6 +5,7 @@ import PrinterUpload from "../component/printerUpload";
 import SliderUpload from "../component/sliderUpload";
 import VipUpload from "../component/vipUpload";
 import UpdateModal from "../component/updateModal";
+import UpdateModalVip from "../component/updateModalVip";
 import { Redirect } from "react-router-dom";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
@@ -15,6 +16,7 @@ class Admin extends React.Component {
 		this.state = {
 			token: null,
 			showModal: false,
+			showModalVip: false,
 			updateId: null
 		};
 	}
@@ -167,7 +169,7 @@ class Admin extends React.Component {
 																				className="fas fa-pen-square text-danger"
 																				onClick={() => {
 																					this.setState({
-																						showModal: true,
+																						showModalVip: true,
 																						updateId: item.id
 																					});
 																					actions.saveVipFoundToUpdateToTheStore(
@@ -196,10 +198,10 @@ class Admin extends React.Component {
 												</Context.Consumer>
 											</div>
 
-											<UpdateModal
-												show={this.state.showModal}
+											<UpdateModalVip
+												show={this.state.showModalVip}
 												updateId={this.state.updateId}
-												onClose={() => this.setState({ showModal: false })}
+												onClose={() => this.setState({ showModalVip: false })}
 											/>
 										</Tab>
 									</Tabs>
