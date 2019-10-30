@@ -6,7 +6,6 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Login } from "./component/login";
-import Carrousel from "./component/carrousel";
 import Admin from "./views/admin";
 
 //create your first component
@@ -23,7 +22,6 @@ export class Layout extends React.Component {
 						<Navbar />
 						<Switch>
 							<Route exact path="/" component={Home} />
-							<Route exact path="/carrousel" component={Carrousel} />
 							<Route exact path="/login" component={Login} />
 							<Route exact path="/admin" component={Admin} />
 							<Route render={() => <h1>Not found!</h1>} />

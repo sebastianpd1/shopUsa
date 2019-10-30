@@ -23,9 +23,7 @@ const injectContext = PassedComponent => {
 		}
 
 		componentDidMount() {
-			this.state.actions.getSliders();
-			this.state.actions.getPrinters();
-			this.state.actions.getVips();
+			//this.state.actions.getSliders();
 		}
 
 		render() {
